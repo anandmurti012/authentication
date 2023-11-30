@@ -13,15 +13,18 @@ const  colors = require('colors');
 const express = require('express');
 const {errorHandler} = require('./middleware/errorMiddleware')
 require('dotenv').config();
+const connectDB = require('./config/db')
 const port = process.env.PORT || 5000
 
+connectDB()
 const app = express()
-
+app.use(express.json())
 app.use(express.urlencoded({extended:false}))
 
-app.use('/', require('./Routes/goalRoutes'))
+app.use('/api/goals', require('./Routes/goalRoutes'))
+app.use('/api/users', require('./Routes/userRoutes'))
 
-app.use(errorHandler);
+app.use(errorHandler)
  
 app.listen(port, () => {
     console.log(`Server has started on port ${port}`)

@@ -17,8 +17,9 @@ const {getGoals, setGoals, updateGoal, deleteGoal} = require('../Controllers/goa
 // //Delete
 // router.delete('/:id', deleteGoal)
 
+const {protect} = require('../middleware/authMiddleware')
 //Now we are just shorting the lines (for clean code), but both will work same
-router.route('/').get(getGoals).post(setGoals)
-router.route('/:id').put(updateGoal).delete(deleteGoal);
+router.route('/').get(protect, getGoals).post(protect, setGoals)
+router.route('/:id').put(protect, updateGoal).delete(protect, deleteGoal);
 
 module.exports = router;
